@@ -31,7 +31,7 @@ def get_user(id: int, db: Session = Depends(get_db)):
 @router.post("", status_code=status.HTTP_201_CREATED, response_model=UserCreate)
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
     user_post = db.query(models.User).filter(models.User.email == user.email)
-    if user_post:
+    if user_post == user.email:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail=f"User with email {user.email} already exists.",
